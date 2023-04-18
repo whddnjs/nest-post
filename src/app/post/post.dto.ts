@@ -12,11 +12,8 @@ export namespace PostDto {
 
       @IsNotEmpty()
       readonly content: string;
-
     }
 
     export class Update extends PartialType(Create) { }
-
   }
-
 }

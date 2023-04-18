@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { RouterModule } from '@nestjs/core';
+import { AuthModule } from 'src/auth/auth.module';
 
 import { PostModule } from './post/post.module';
 import { UserModule } from './user/user.module';
@@ -7,17 +8,23 @@ import { UserModule } from './user/user.module';
 @Module({
   imports: [
     RouterModule.register([
+
       {
-        path: 'user',
-        module: UserModule
+        path: 'auth',
+        module: AuthModule
       },
       {
         path: 'post',
         module: PostModule
+      },
+      {
+        path: 'user',
+        module: UserModule
       }
     ]),
-    UserModule,
-    PostModule
+    AuthModule,
+    PostModule,
+    UserModule
   ]
 })
 export class AppRoutingModule { }
