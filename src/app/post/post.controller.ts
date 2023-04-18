@@ -21,27 +21,26 @@ export class PostController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number): Promise<PostEntity> {
-    return this.postService.findOne(id);
-  }
-
-  @Patch(':id')
-  async update(@Param('id') id: number, @Body() dto: PostDto.Request.Update): Promise<PostEntity> {
+  async findOne(@Param('id') id: number): Promise<PostEntity> {
     const postEntity = await this.postService.findOne(id);
     if (!postEntity) {
       throw new NotFoundException('해당 아이디의 게시글이 없습니다.');
     }
+    return postEntity;
+  }
+
+  @Patch(':id')
+  async update(@Param('id') id: number, @Body() dto: PostDto.Request.Update): Promise<PostEntity> {
+    const postEntity = await this.findOne(id);
 
     return this.postService.update(postEntity, dto);
   }
 
   @Delete(':id')
   async remove(@Param('id') id: number): Promise<PostEntity> {
-    const postEntity = await this.postService.findOne(id);
-    if (!postEntity) {
-      throw new NotFoundException('해당 아이디의 게시글이 없습니다.');
-    }
+    const postEntity = await this.findOne(id);
 
     return this.postService.remove(postEntity);
   }
+
 }

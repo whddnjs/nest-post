@@ -16,12 +16,14 @@ export class PostService {
     return await this.postRepository.save(entity);
   }
 
-  async findAll(): Promise<PostEntity[]> {
-    return await this.postRepository.find();
+  findAll(): Promise<PostEntity[]> {
+    return this.postRepository.find();
   }
 
-  async findOne(id: number): Promise<PostEntity> {
-    return await this.postRepository.findOneBy({ id });
+  findOne(id: number): Promise<PostEntity> {
+    return this.postRepository.findOne({
+      where: { id }
+    });
   }
 
   async update(postEntity: PostEntity, dto: PostDto.Request.Update): Promise<PostEntity> {
