@@ -2,6 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException } 
 import { PostService } from './post.service';
 import { PostDto } from './post.dto';
 import { PostEntity } from 'src/database/entities/post.entity';
+import { User } from 'src/auth/auth.decorators';
+import { UserEntity } from 'src/database/entities/user.entity';
 
 @Controller()
 export class PostController {
@@ -11,8 +13,12 @@ export class PostController {
   ) { }
 
   @Post()
-  create(@Body() dto: PostDto.Request.Create): Promise<PostEntity> {
-    return this.postService.create(dto);
+  create(
+    @User() user: UserEntity,
+    @Body() dto: PostDto.Request.Create
+  ): Promise<PostEntity> {
+    const { id } = user;
+    return this.postService.create(id, dto);
   }
 
   @Get()

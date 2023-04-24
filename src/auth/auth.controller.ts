@@ -5,6 +5,7 @@ import { AuthDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { plainToInstance } from 'class-transformer';
 import { UserDTO } from 'src/app/user/user.dto';
+import { Public } from './auth.decorators';
 
 @Controller()
 export class AuthController {
@@ -13,6 +14,7 @@ export class AuthController {
     private readonly authService: AuthService
   ) { }
 
+  @Public()
   @Post('/signup')
   async signup(@Body() dto: AuthDto.Request.SignUp) {
     const { username } = dto;
@@ -27,6 +29,7 @@ export class AuthController {
 
   }
 
+  @Public()
   @Post('/signin')
   async signin(@Body() dto: AuthDto.Request.SignIn) {
     const { username, password } = dto;

@@ -14,6 +14,9 @@ export class PostEntity {
   @Column()
   content: string;
 
+  @Column()
+  writerId: number;
+
   @CreateDateColumn()
   createdAt: Date;
 

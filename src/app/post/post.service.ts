@@ -11,8 +11,11 @@ export class PostService {
     private readonly postRepository: PostRepository
   ) { }
 
-  async create(dto: PostDto.Request.Create): Promise<PostEntity> {
-    const entity = this.postRepository.create(dto);
+  async create(id: number, dto: PostDto.Request.Create): Promise<PostEntity> {
+    const entity = this.postRepository.create({
+      ...dto,
+      writerId: id
+    });
     return await this.postRepository.save(entity);
   }
 
